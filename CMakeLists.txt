@@ -4,11 +4,10 @@ project(lisp C)
 # Specify the C standard
 set(CMAKE_C_STANDARD 99)  # or 11, if you prefer C11
 
-# Find the Editline library (if you're using -ledit instead of -lreadline)
-find_package(Editline REQUIRED)
-
 # Add the executable
 add_executable(lisp main.c)
 
 # Link the Editline library
-target_link_libraries(lisp PRIVATE Editline::Editline)
+target_link_libraries(lisp PRIVATE readline)
+
+target_compile_options(lisp PRIVATE -Wall -Wextra -Wpedantic -Werror)
