@@ -5,7 +5,7 @@ CC = gcc
 CFLAGS = -Wall -g
 
 # Define the linker flags
-LDFLAGS = -lreadline
+LDFLAGS = -ledit
 
 # Define the target executable
 TARGET = lisp
