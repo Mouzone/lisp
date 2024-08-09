@@ -5,7 +5,7 @@ project(lisp C)
 set(CMAKE_C_STANDARD 99)  # or 11, if you prefer C11
 
 # Add the executable
-add_executable(lisp main.c)
+add_executable(lisp parsing.c)
 
 # Link the Editline library
 target_link_libraries(lisp PRIVATE readline)
