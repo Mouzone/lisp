@@ -48,17 +48,14 @@ lval lval_err(int x) {
 }
 
 void lval_print(lval v) {
-    switch (v.type) {
 
+    switch (v.type) {
         case LVAL_NUM: printf("%li", v.num); break;
 
         case LVAL_ERR:
-
             switch (v.err) {
                 case LERR_DIV_ZERO: printf("Error: Division By Zero!"); break;
-
                 case LERR_BAD_OP: printf("Error: Invalid Operator"); break;
-
                 case LERR_BAD_NUM: printf("Error: Invalid Number"); break;
             }
         break;
@@ -87,6 +84,7 @@ lval eval_op(lval x, char* op, lval y) {
 lval eval(mpc_ast_t* t) {
 
     if (strstr(t->tag, "number")) {
+
         errno = 0;
         long x = strtol(t->contents, NULL, 10);
         return errno != ERANGE ? lval_num(x) : lval_err(LERR_BAD_NUM);
@@ -140,7 +138,6 @@ int main(void) {
             mpc_err_print(r.error);
             mpc_err_delete(r.error);
         }
-
         free(input);
     }
 
