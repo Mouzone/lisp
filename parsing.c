@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "mpc.h"
 #ifdef _WIN32
 #include <string.h>
 
@@ -24,7 +24,7 @@ void add_history(char* unused) {}
 #include <editline/readline.h>
 #endif
 
-int main(int argc, char** argv) {
+int main(void) {
 
     /* Print Version and Exit Information */
     puts("Lispy Version 0.0.0.0.1");

@@ -2,16 +2,16 @@
 CC = gcc
 
 # Define the compiler flags
-CFLAGS = -Wall -g
+CFLAGS = -Wall -Wextra -Wpedantic -Werror -std=c99 -g
 
 # Define the linker flags
-LDFLAGS = -ledit
+LDFLAGS = -ledit -lm
 
 # Define the target executable
 TARGET = lisp
 
 # Define the source file
-SRCS = main.c
+SRCS = parsing.c mpc.c
 
 # Rule to build the target
 $(TARGET): $(SRCS)
