@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "mpc.h"
 #ifdef _WIN32
-#include <string.h>
 
 static char buffer[2048];
 
@@ -10,9 +9,9 @@ static char buffer[2048];
 char* readline(char* prompt) {
     fputs(prompt, stdout);
     fgets(buffer, 2048, stdin);
-    char* cpy = malloc(strlen(buffer) + 1);
-    strcpy(cpy,buffer);
-    cpy[strlen(cpy) - 1] = '\0';
+    char* cpy = malloc(strlen(buffer)+1);
+    strcpy(cpy, buffer);
+    cpy[strlen(cpy)-1] = '\0';
     return cpy;
 }
 
@@ -26,7 +25,7 @@ void add_history(char* unused) {}
 
 enum { LVAL_ERR, LVAL_NUM, LVAL_SYM, LVAL_SEXPR };
 
-typedef struct {
+typedef struct lval {
     int type;
     long num;
 
@@ -149,7 +148,7 @@ lval* builtin_op(lval* a, char* op) {
 
     lval* x = lval_pop(a, 0);
 
-    if (strcmp(op, "-") == 0 && a->count == 0) {
+    if ((strcmp(op, "-") == 0) && a->count == 0) {
         x->num = -x->num;
     }
 
@@ -216,8 +215,8 @@ lval* lval_read(mpc_ast_t* t) {
     if (strstr(t->tag, "symbol")) { return lval_sym(t->contents); }
 
     lval* x = NULL;
-    if (strcmp(t->tag, ">") == 0)         { x = lval_sexpr(); }
-    if (strstr(t->tag, "sexpre")) { x = lval_sexpr(); }
+    if (strcmp(t->tag, ">") == 0)        { x = lval_sexpr(); }
+    if (strstr(t->tag, "sexpr")) { x = lval_sexpr(); }
 
     for (int i = 0; i < t->children_num; i++) {
         if (strcmp(t->children[i]->contents, "(") == 0) { continue; }
@@ -238,17 +237,17 @@ int main(void) {
     mpc_parser_t* Lispy    = mpc_new("lispy");
 
     mpca_lang(MPCA_LANG_DEFAULT,
-        "                                               \
-            number    : /-?[0-9]+/ ;                            \
-            operator  : '+' | '-' | '*' | '/' ;                 \
-            sexpr     : '(' <expr>* ')' ;                       \
-            expr      : <number> | <symbol> | <sexpr> ;         \
-            lispy     : /^/ <expr>* /$/ ;                       \
+        "                                        \
+            number    : /-?[0-9]+/ ;                     \
+            symbol  : '+' | '-' | '*' | '/' ;            \
+            sexpr     : '(' <expr>* ')' ;                \
+            expr      : <number> | <symbol> | <sexpr> ;  \
+            lispy     : /^/ <expr>* /$/ ;                \
         ",
         Number, Symbol, Sexpr, Expr, Lispy);
 
     /* Print Version and Exit Information */
-    puts("Lispy Version 0.0.0.0.1");
+    puts("Lispy Version 0.0.0.0.5");
     puts("Press Ctrl+c to Exit\n");
 
     while (1) {
@@ -268,7 +267,7 @@ int main(void) {
             mpc_err_print(r.error);
             mpc_err_delete(r.error);
         }
-        
+
         free(input);
     }
 
