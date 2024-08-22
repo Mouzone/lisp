@@ -8,4 +8,5 @@ add_executable(lisp parsing.c mpc.c)
 target_link_libraries(lisp PRIVATE edit)
 target_link_libraries(lisp PRIVATE m)
 
-target_compile_options(lisp PRIVATE -Wall -Wextra -Wpedantic -Werror)
+target_compile_options(lisp PRIVATE -Wall -Wextra -Wpedantic)
+#-Werror

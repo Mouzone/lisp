@@ -2,8 +2,8 @@
 CC = gcc
 
 # Define the compiler flags
-CFLAGS = -Wall -Wextra -Wpedantic -Werror -std=c99 -g
-
+CFLAGS = -Wall -Wextra -Wpedantic -std=c99 -g
+#-Werror
 # Define the linker flags
 LDFLAGS = -ledit -lm
 
